@@ -1,10 +1,10 @@
 # CSCI 2510: Studio - Hello, world!
 
-*\"It\'s a dangerous business, Frodo, going out of your door. You step
+_\"It\'s a dangerous business, Frodo, going out of your door. You step
 into the road, and if you don\'t keep your feet, there is no knowing
-where you might be swept off to.\"*
+where you might be swept off to.\"_
 
--- Bilbo, *The Fellowship of the Ring*, Book 1, Chapter 3
+-- Bilbo, _The Fellowship of the Ring_, Book 1, Chapter 3
 
 Let\'s get started with two simple \"Hello, world!\" programs that
 demonstrate the difference between doing standard output with the C
@@ -16,9 +16,9 @@ In this studio, you will:
     functions
 2.  Write a \"Hello, world!\" program using the C standard library
 3.  Write a \"Hello, world!\" program using Linux system calls
-4.  Write a \"Hello, world!\" program using Linux shell 
+4.  Write a \"Hello, world!\" program using Linux shell
 
-------------------------------------------------------------------------
+---
 
 Please complete the required exercises below, as well as any optional
 enrichment exercises that you wish to complete.
@@ -27,7 +27,7 @@ As you work through these exercises, please record your answers in a
 text file. When finished, submit your code and answers file to this git
 respository.
 
-------------------------------------------------------------------------
+---
 
 ### Required Exercises
 
@@ -37,7 +37,7 @@ respository.
     If you want to use the department Linux resources, then you can
     login locally to a Linux
     machine in the classroom or lab, or you can remotely connect to the
-    department server at *hopper.slu.edu*. In general you will only ever need
+    department server at _hopper.slu.edu_. In general you will only ever need
     Linux terminal access for these exercises, though you\'re welcome to use a
     GUI desktop.
 
@@ -62,18 +62,18 @@ respository.
 
 5.  Let\'s put our newfound knowledge to use! Quit out of the man page
     by pressing \"q\" and create a text file called
-    \"hello\_fprintf.c\". Finish the following empty program so that it
+    \"hello_fprintf.c\". Finish the following empty program so that it
     prints a message of your choice.
 
     `// Your name
-     // The date
-     // A short description of your program
-     // Include file goes here
+    // The date
+    // A short description of your program
+    // Include file goes here
 
-     int main( int argc, char* argv[] ){
-       //Make a call to fprintf() here
-       return 0;
-     }`
+    int main( int argc, char\* argv[] ){
+    //Make a call to fprintf() here
+    return 0;
+    }`
 
     The first argument of `fprintf()` must specify an I/O stream. In
     this case you should use \"`stdout`\". This is a special stream that
@@ -93,7 +93,7 @@ respository.
     runs correctly then copy and paste your terminal output as the
     answer to this exercise.
 
-7.  Great! Now we want to accomplish the same thing but using a system
+6.  Great! Now we want to accomplish the same thing but using a system
     call directly, as opposed to the C library. The particular system
     call we want to use is called `write()`. However, if you give the
     command \"`man write`\" you won\'t arrive at the correct
@@ -101,10 +101,10 @@ respository.
     such a common term. Instead, give the command \"`man man`\" to pull
     up the documentation for the manual system.
 
-    As the answer to this exercise, give the *section number* for system
+    As the answer to this exercise, give the _section number_ for system
     calls.
 
-8.  Now, use the answer to the last exercise to look up the
+7.  Now, use the answer to the last exercise to look up the
     documentation for the `write()` system call. The syntax you should
     use is:
 
@@ -119,7 +119,7 @@ respository.
     `write()` system call (again, look beneath the \"SYNOPSIS\"
     statement).
 
-9.  Make a copy of your program called `hello_write.c`. The Linux
+8.  Make a copy of your program called `hello_write.c`. The Linux
     terminal command to copy a file is `cp`. In this case, you should
     execute the command:
 
@@ -127,16 +127,16 @@ respository.
 
     Leave the answer for this exercise blank.
 
-11. The `fprintf()` function doesn\'t actually implement the code that
+9.  The `fprintf()` function doesn\'t actually implement the code that
     allows your program to print to the terminal, it relies on the
-    operating system to do that. The OS provides a ***system call***
+    operating system to do that. The OS provides a **_system call_**
     called `write()` that gives this functionality, and `fprintf()`
     calls this function on your behalf. However, you can call `write()`
     directly, which is what we will do now.
 
     Modify your program to use `write()` instead of `fprintf()`. There
     are two differences between the functions. The first is that you
-    need to use a *file descriptor* instead of a *file stream*. In other
+    need to use a _file descriptor_ instead of a _file stream_. In other
     words, replace the built-in variable \"`stdout`\" with the built-in
     variable \"`STDOUT_FILENO`\". Both variables refer to the same
     \"thing\" but in different ways.
@@ -144,12 +144,12 @@ respository.
     The second difference is that `write()` is a byte-oriented function
     rather than a string-oriented function. The `fprintf()` function was
     able to figure out how many characters to write on its own, but you
-    will need to tell `write()` how many characters to output. 
+    will need to tell `write()` how many characters to output.
     When counting how many characters is in your buffer, don\'t
     forget the newline character `'\n'`. Note that the whole newline
     character escape sequence (`'\n'`) counts as one character. For
     example, the string "dog\n" has four characters.
-    
+
     Once you are finished, copy and paste your new program as the answer to
     this exercise.
 
@@ -158,7 +158,7 @@ respository.
     when you do this? Try running the code- does anything usual show up?
     If so, Why do you think this is?
 
-11. The function `fprintf()` is provided by the *C standard library* and
+11. The function `fprintf()` is provided by the _C standard library_ and
     is guaranteed to exist for any standards-compliant C language
     implementation- even on other operating systems. The `write()`
     system call is not guaranteed to exist as it is provided by the
@@ -169,10 +169,10 @@ respository.
     would want to use a C library function and another situation when
     you would want to use an OS system call.
 
-12. Now, create a hello.sh to print \"Hello World!\". 
+12. Now, create a hello.sh to print \"Hello World!\".
 
 ### Optional Enrichment Exercises
 
 1.  No optional exercises
 
-------------------------------------------------------------------------
+---
