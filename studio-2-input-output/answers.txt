@@ -1,0 +1,11 @@
+1. When you type `cat` into the terminal, you get the ability to type in the console, and hit return for new lines. When on a blank line, hitting control + d exits out of cat.
+2. cat < mars.txt printed out the entirity of the text file to the console.
+3. The entirity of mars.txt was copied to a new file named new.txt.
+4. The whole file was overwritten by the empty lines
+5. Instead of writing over new.txt, we append to the end.
+6. <unistd.h>
+7.
+8. ssize_t, read() returns 0 (or -1 on error)
+9. yep
+10. No probably not. The program will still work but just at a different byte speed
+11. Small buffer size: slower but less memory. Large Buffer: faster but more memory
