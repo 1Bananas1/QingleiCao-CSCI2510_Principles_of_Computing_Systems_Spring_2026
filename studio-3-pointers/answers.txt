@@ -1,0 +1,56 @@
+Jimmy MacDonald
+Studio 2
+March 6 2026
+Dr. Cao
+
+1. ok
+2.
+3. 
+for (int i=0; messagePtr[i] != '\0'; i++) {
+        printf("%c",messagePtr[i]);
+        printf("\n");
+    } 
+4. Probably just H
+5. H
+6. ok
+7. 
+for (int i = 0; *(messagePtr + i) != '\0'; i++) {
+        printf("%c\n", *(messagePtr + i));
+    }
+8. slight problem i already did
+9. 
+int len = 0;
+    while (*(messagePtr + len) != '\0') {
+        len++;
+    }
+    for (int i = len - 1; i >= 0; i--) {
+        printf("%c\n", *(messagePtr + i));
+    }
+10. 
+#include <stdlib.h>
+
+char* reverseString( char* input ){
+
+    //1. First count how many characters are in the input string
+    int len = 0;
+    while (*(input + len) != '\0') {
+        len++;
+    }
+    //This creates enough space to store the reversed string, plus one more byte
+    //for the null terminator
+    char* output = (char*)malloc( len+1 );
+
+    //2. Copy the input string to the output string in reverse order. There are
+    //multiple ways to do this- consider using a counter, or consider using two
+    //pointers.
+    for (int i = 0; i < len; i++) {
+        output[i] = *(input + (len - 1 - i));
+    }
+
+    //REMEMBER THAT YOUR OUTPUT STRING MUST END WITH A NULL TERMINATOR. This is not
+    //provided for you automatically- you must put it there!
+    output[len] = '\0';
+
+    return output; 
+}
+

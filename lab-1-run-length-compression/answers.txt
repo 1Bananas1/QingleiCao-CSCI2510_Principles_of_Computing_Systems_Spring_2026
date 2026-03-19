@@ -1,0 +1,8 @@
+1. me, myself, and I
+2. Something like ABCDEFG where instead of compressing we actually double the char length with 1A1B, etc.
+3. I assume that strong bias is going to win due to the mass amount of repeating characters.
+    1 mil random = -140% Compression
+    1 mil weak bias = 14% Compression
+    1 mil strong bias = 59% Compression
+4. 18.317s (thank you WSL2)
+5. 1.881s - I think the difference is due to the bigger window there were more patterns that were bigger than just a sliding window of 1
