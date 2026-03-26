@@ -1,8 +1,28 @@
 1. me, myself, and I
 2. Something like ABCDEFG where instead of compressing we actually double the char length with 1A1B, etc.
 3. I assume that strong bias is going to win due to the mass amount of repeating characters.
-    1 mil random = -140% Compression
-    1 mil weak bias = 14% Compression
-    1 mil strong bias = 59% Compression
+    1mil_random compression ratio: 0.42
+    1mil_weak_bias compression ratio: 1.16
+    1mil_strong_bias compression ratio: 2.44
 4. 18.317s (thank you WSL2)
-5. 1.881s - I think the difference is due to the bigger window there were more patterns that were bigger than just a sliding window of 1
+5. 1.881s - With length 10 each read() grabs 10 bytes instead of 1, so there are way fewer syscalls total. Since syscalls are expensive (especially on WSL2), cutting down how often they happen makes it way faster.
+6. I attempted both extra credit exercises
+
+ex credit (3%):
+slu_logo.bmp original: 4937534 bytes
+compressed (RLE length 1): 133,552 bytes
+Compression ratio: 36.97x
+JPG Compression Ratio: 14.39x (4937534/343040)
+PNG Compression Ratio: 64.29x (4937534/76800)
+
+
+
+extra credit (2%)
+
+uncompressed.bmp original: 24883254 bytes
+compressed (rle, length 1): 48099632 bytes
+RLE Compression ratio: 0.517
+RLE is ineffective because the image has almost no repeated pixel pattern so every run has count=1 added overhead
+JPG Compression Ratio: 15.03x (24883254/1655808)
+PNG Compression Ratio: 2.95x (24883254/8432640)
+I can't really see a difference visually between JPG and BMP, and definitely no difference between BMP and PNG

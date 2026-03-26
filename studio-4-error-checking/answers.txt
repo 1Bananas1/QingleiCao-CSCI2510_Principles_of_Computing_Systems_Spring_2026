@@ -1,0 +1,68 @@
+1. 
+
+note: i kinda just took stuff from lab 1
+#include <stdio.h>
+#include <errno.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#define bufferSize 1024
+char buffer[ bufferSize ];
+
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        perror("Too many arguments");
+        exit(-1);
+    }
+
+    int fd_in = open(argv[1], O_RDONLY);
+    if (fd_in == -1) {
+        if (errno == ENOENT) {
+            perror("File does not exist.");
+        } else if (errno == EACCES) {
+            perror("No permission to read file.");
+        } else if (errno == EISDIR) {
+            perror("Path is directory, not a file.");
+        } else {
+            perror("Path is invalid or another error occured.");
+        }
+        exit(-1);
+    }
+
+    ssize_t bytesRead;
+
+    while ((bytesRead = read (fd_in, buffer, bufferSize)) > 0) {
+        ssize_t bytes_written = write(STDIN_FILENO, buffer, bytesRead);
+        if (bytes_written == 1) {
+            perror("Write");
+            close(fd_in);
+            exit(-1);
+        }
+    }
+    close(fd_in);
+}
+2. File does not exist.: No such file or directory
+3. Uhh i can still do it...to quote from Claude because I was still confused and needed help
+"""
+The permissions show -r-xr-xr-x, not --x--x--x. This is because you're running on WSL2 with a Windows filesystem (NTFS).
+
+NTFS doesn't support Unix permissions natively. When you run chmod on a file in /mnt/c/, WSL can't actually enforce it — the file is still controlled by Windows ACLs, not Linux permissions. chmod appears to succeed but the permissions don't fully stick (and read often remains).
+
+To actually test chmod behavior, you need to work on the Linux filesystem (e.g., somewhere under ~/ like /home/jmacd745/), not under /mnt/c/.
+"""
+4. open() returns -1 on error
+5. if (fd_in == -1)
+6. perror("Error opening file)
+7.
+8. File does not exist.: No such file or directory
+9. No permission to read file.: Permission denied
+10.
+
+Function | Error return Val | Sets errno
+open() | -1 | yes
+close() | -1 | yes
+read() | -1 | yep
+write() | -1 | yes
+printf() | negative value | yes
+11. Faster debugging and actually understandable error messages
