@@ -1,0 +1,70 @@
+1.
+Sleeper's PID is: 70991
+Slept for 0 iterations!
+Slept for 1 iterations!
+Slept for 2 iterations!
+Slept for 3 iterations!
+Slept for 4 iterations!
+Slept for 5 iterations!
+Slept for 6 iterations!
+Slept for 7 iterations!
+Slept for 8 iterations!
+^C
+
+2.  SIGINT       P1990      Term    Interrupt from keyboard
+    Numeric value: 2
+
+3.  Using "kill -s 2 <pid>" sent SIGINT to the sleeping process.
+The sleeper process was terminated
+
+    Slept for 132 iterations!
+    Slept for 133 iterations!
+Then the process got killed and the shell returned to prompt.
+
+4.  I picked SIGKILL (signal 9). I ran: kill -s 9 <pid>
+Output before the kill:
+Slept for 29 iterations!
+After sending SIGKILL process was immediately and forcibly
+terminated 
+Unlike SIGINT, SIGKILL cannot be caught, blocked, or
+ignored by the process - the OS kills it unconditionally.
+
+5.  
+When running call_sleeper and pressing control c, SIGINT is sent to
+the entire foreground process group including both the caller/Parent
+and the sleeper/child. Both processes terminated. The
+calling program didn't print its success message
+("Parent finished waiting and returned successfully!") because it
+is killed before it can finish waiting.
+
+6.  
+void sigint_handler(int signum) {
+    printf("Caller is ignoring SIGINT signal %d\n", signum);
+}
+
+In main(), before the fork():
+    signal(SIGINT, sigint_handler);
+
+7.
+Forking sleeper...
+Waiting for sleeper 12345...
+Sleeper's PID is: 12346
+Slept for 0 iterations!
+Slept for 1 iterations!
+Slept for 2 iterations!
+^C
+Caller is ignoring SIGINT signal 2
+Parent finished waiting and returned successfully!
+
+When CTRL-C is pressed the sleeper (child) receives SIGINT and
+terminates since it has no custom handler 
+The caller (parent) intercepts SIGINT with the custom handler prints the ignore
+message and then continues waiting 
+Since the child has exited waitpid() returns and the caller prints its success message
+
+8.  
+a web server process receiving SIGHUP (hang-up signal) to reload its
+configuration file without fully restarting 
+Instead of shutting down and losing active connections the server catches SIGHUP and
+re-reads its config file applying new settings on the fly
+this is commonly used by servers like nginx and apache.

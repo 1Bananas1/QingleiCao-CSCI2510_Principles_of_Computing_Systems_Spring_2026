@@ -1,0 +1,27 @@
+1. 
+The process ID of this program is: 5427
+The process ID of this program is: 5549
+The process ID of this program is: 5659
+2.
+The process ID of this program is: 6075
+The process ID of this program is: 6071
+3. On  success,  the  PID  of the child process is returned in the parent, and 0 is returned in the child.  On failure, -1 is returned in the
+       parent, no child process is created, and errno is set to indicate the error.
+4.
+The process ID of this program is: 6562
+The process ID of this program is: 6562
+5. No it didn't, the parent fork executed fine. then it acted as if the command was finished running, then my currentt directory came back up ready for another command then the child di the output
+6. Program only marked as complete when both forks completed
+7.
+total 32
+-rwxrwxrwx 1 jmacd jmacd  6079 Mar 26 09:11 README.md
+-rwxrwxrwx 1 jmacd jmacd   774 Mar 26 09:48 answers.txt
+-rwxrwxrwx 1 jmacd jmacd 18016 Mar 26 09:47 fork
+-rwxrwxrwx 1 jmacd jmacd   408 Mar 26 09:37 fork.c
+8.
+total 32
+-rwxrwxrwx 1 jmacd jmacd  6079 Mar 26 09:11 README.md
+-rwxrwxrwx 1 jmacd jmacd   996 Mar 26 09:58 answers.txt
+-rwxrwxrwx 1 jmacd jmacd 18200 Mar 26 09:59 fork
+-rwxrwxrwx 1 jmacd jmacd   516 Mar 26 09:58 fork.c
+The process ID of this program is: 13185

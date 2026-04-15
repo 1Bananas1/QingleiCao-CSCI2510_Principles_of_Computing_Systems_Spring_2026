@@ -1,0 +1,2 @@
+1. known bugs: WSL is ruining my life but I refuse to fully install linux. anyways, when running under a windows file system (mnt/c/) the prompt displays the full path instead of home relative path because the linux home directory does not match the windows mounted working directory.
+2. Modified slush prompt to display current directory relative to user's home directory in format slush|dir1/dir2>. uses getcwd and getenv

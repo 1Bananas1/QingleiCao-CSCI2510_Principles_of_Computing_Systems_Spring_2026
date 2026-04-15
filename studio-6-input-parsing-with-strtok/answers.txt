@@ -1,0 +1,42 @@
+1. 
+Enter a string: 
+help
+help
+2. In the first call, the string to be parsed should be specified in str. In each subsequent call that should parse the same string, str must be NULL.
+3. Whitespace
+4.
+Enter a string: 
+that exam in algorithms was miserable
+ that
+
+
+5. 
+Enter a string: 
+that exam in algorithms was miserable
+ that
+ exam
+ in
+ algorithms
+ was
+ miserable
+
+6. 
+    if (fgets(buff, sizeof(buff), stdin) != NULL) {
+        buff[strcspn(buff, "\n\r")] = '\0';
+    }
+7.
+8. cmd = tok;
+9. 
+my_argv[0] = cmd;
+    int i = 1;
+    tok = strtok(0, s);
+    while (tok != NULL) {
+        my_argv[i] = tok;
+        i++;
+        tok = strtok(0, s);
+    }
+    my_argv[i] = '\0';
+10. 
+Enter a string: 
+ls -l
+total 36
