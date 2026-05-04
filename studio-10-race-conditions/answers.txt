@@ -1,0 +1,84 @@
+1.
+    for (int i = 0; i < 2000000; i++) race++;
+    for (int i = 0; i < 2000000; i++) race--;
+
+2. If adder() runs first then subtractor() runs, the final value
+of `race` should be 0. Adder increments 2,000,000 times and subtractor decrements
+2,000,000 times sequentially, so they cancel out perfectly.
+
+Test result: race = 0
+
+yep. sequential execution in main() produces a
+deterministic result of 0 every time.
+
+3. result will probably be 0 since the same number of additions and
+subtractions occur. but since race++ is not atomic (read, modify, write),
+threads can interleave and lose updates, so result will likely be non-zero.
+
+4.
+race = 856021
+race = 419475
+race = 86816
+race = 273835
+race = -200312
+race = 292122
+
+varies wildly, not 0. race condition is clearly happening.
+
+5. race++ and race-- each compile to 3 instructions: load, modify, store.
+two threads can both read the same value, modify it, then both write back,
+so one update gets lost. max possible: +2,000,000 (all subtractions lost).
+min possible: -2,000,000 (all additions lost).
+
+6.
+1,000,000 iterations:
+race = 145430
+race = -185327
+race = -101053
+race = -41437
+still happening.
+
+500,000 iterations:
+race = 316791
+race = -127855
+race = 229334
+race = -98734
+still happening.
+
+1,000 iterations (15 runs):
+race = 0
+race = 0
+race = 0
+... (all 15: race = 0)
+with so few iterations, one thread finishes before the other starts so no overlap occurs.
+
+7. yes, a race condition can still occur on a single-core machine. the OS
+uses preemptive time-slicing and can context switch between the load and
+store steps of race++/race--. stale register values get written back after
+the switch. less likely than with true parallelism but still possible.
+
+8.
+taskset -c 0 with 2M iterations:
+race = 0
+race = 0
+race = 0
+race = 0
+
+on one core the threads take turns. each gets through many iterations per
+time slice, and 2M ops finish fast enough that context switches rarely land
+mid-instruction. result is consistently 0.
+
+9.
+taskset -c 0 with 200,000,000 iterations:
+race = 37989486
+race = -2803371
+race = 84264349
+
+race condition reappears even on one core.
+
+10. with 200M iterations the threads run for much longer, so the OS
+preempts them many times. a thread can be interrupted after loading `race`
+into a register, the other thread then runs and modifies `race` many times,
+then the first thread resumes and writes its stale register value back,
+wiping out all that work. enough context switches = race condition even on
+one core.

@@ -1,0 +1,92 @@
+1.
+    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
+2.
+
+3. the result should be exactly 0 every time. since only one thread can hold
+the mutex at a time, increments and decrements can't interleave, so no updates
+are lost. the program will be slower because acquiring and releasing the mutex
+adds overhead on every iteration.
+
+4.
+race = 0
+race = 0
+race = 0
+race = 0
+race = 0
+
+yes, matches expectations. always 0 regardless of how many times it runs.
+
+5. racy program, 20,000,000 iterations:
+
+race = 3706276
+real    0m0.354s
+user    0m0.672s
+sys     0m0.000s
+
+race = 876328
+real    0m0.437s
+user    0m0.845s
+sys     0m0.000s
+
+race = 228341
+real    0m0.438s
+user    0m0.843s
+sys     0m0.000s
+
+average real time: ~0.410s
+
+6. mutex program, lock/unlock per iteration, 20,000,000 iterations:
+
+race = 0
+real    0m1.618s
+user    0m2.234s
+sys     0m0.896s
+
+race = 0
+real    0m1.564s
+user    0m2.093s
+sys     0m0.919s
+
+race = 0
+real    0m1.592s
+user    0m2.298s
+sys     0m0.766s
+
+average real time: ~1.591s
+about 3.9x slower than the racy version.
+
+7. mutex program, lock/unlock once per thread, 20,000,000 iterations:
+
+race = 0
+real    0m0.062s
+user    0m0.052s
+sys     0m0.000s
+
+race = 0
+real    0m0.057s
+user    0m0.029s
+sys     0m0.007s
+
+race = 0
+real    0m0.055s
+user    0m0.044s
+sys     0m0.000s
+
+average real time: ~0.058s
+faster than the racy program (~0.41s). the two threads run back to back
+with no contention so there's no cache thrashing or lock overhead in the loop.
+
+8. when each thread locks once and holds the mutex for all 20M iterations,
+the threads run fully sequentially with no contention. the loop runs entirely
+in one thread's cache with no false sharing or lock overhead per iteration.
+the racy version actually runs both threads simultaneously and causes cache
+line bouncing between cores on every shared write, which is slower than
+sequential. the per-thread lock avoids all of that.
+
+10. per-iteration locking is appropriate when threads need fine-grained
+interleaving - for example, multiple threads adding and removing items from
+a shared queue where each insert/remove is independent. per-thread (bulk)
+locking is appropriate when a thread needs to perform a large atomic batch
+of work, such as updating many fields of a shared struct where intermediate
+states would be inconsistent.

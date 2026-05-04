@@ -1,0 +1,30 @@
+1. void *, args = single argument of type void *
+2. ok
+3.
+Hello from the newly created thread!
+Thread successfully joined in main
+[1] + Done
+4.
+struct thread_data {
+    int arg1;
+    char arg2[100]; // Character buffer
+    int ret;
+};
+5.
+thread arg1: 42
+thread arg2: Hello from the main struct!
+main read return value: 99
+6.
+7.
+Thread ID 0 executing: This is thread 0
+Thread ID 2 executing: This is thread 2
+Thread ID 1 executing: This is thread 1
+Thread ID 3 executing: This is thread 3
+Thread ID 4 executing: This is thread 4
+Main joined thread 0, returned: 0
+Main joined thread 1, returned: 10
+Main joined thread 2, returned: 20
+Main joined thread 3, returned: 30
+Main joined thread 4, returned: 40
+8. inconsistent and jumbled, nothing really in order. but main joining is in order.
+probably something to do with thread scheduling
